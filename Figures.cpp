@@ -14,7 +14,10 @@ void Point::show(HDC hdc) {
 }
 
 
-Missile::Missile(int x, int y) : Point(x, y) {};
+MovingObject::MovingObject(int x, int y) : Point(x, y) {};
+
+
+Missile::Missile(int x, int y) : MovingObject(x, y) {};
 
 void Missile::move(int offsetX, int offsetY) {
 	this->x += offsetX;
@@ -40,7 +43,7 @@ void Missile::onKeyDown(WPARAM wParam) {
 }
 
 void Missile::show(HDC hdc) {
-	HPEN pen = CreatePen(PS_SOLID, weightLine, RGB(0, 0, 0));
+	HPEN pen = CreatePen(PS_SOLID, weightContour, RGB(0, 0, 0));
 	SelectObject(hdc, pen);
 
 

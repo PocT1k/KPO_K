@@ -3,9 +3,13 @@
 
 #include <windows.h>
 
+//#pragma once
+
 
 class Location;
 class Point;
+
+class MovingObject;
 class Missile; //Снаряд
 
 
@@ -23,15 +27,22 @@ public:
 	virtual void show(HDC hdc);
 };
 
-class Missile : public Point {
+class MovingObject : public Point {
+public:
+	MovingObject(int x, int y);
+	virtual void move(int offsetX, int offsetY) = 0;
+};
+
+class Missile : public MovingObject {
 protected:
-	int weightLine = 1;
+	int weightContour = 1;
 	int size = 101;
 public:
 	Missile(int x, int y);
-	virtual void move(int offsetX, int offsetY);
+	virtual void move(int offsetX, int offsetY) override;
 	void onKeyDown(WPARAM wParam);
 	void show(HDC hdc);
 };
+
 
 #endif
