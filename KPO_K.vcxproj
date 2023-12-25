@@ -146,6 +146,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Figures.cpp" />
     <ClCompile Include="KPO_K.cpp" />
   </ItemGroup>
   <ItemGroup>

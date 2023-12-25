@@ -100,6 +100,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
     return TRUE;
 }
 
+Missile missile(0, 0);
 
 //Обрабатывает сообщения в главном окне
 //
@@ -133,6 +134,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(hWnd, &ps);
 
+        missile.show(hdc);
         // TODO: Добавьте сюда любой код прорисовки, использующий HDC
 
         EndPaint(hWnd, &ps);
