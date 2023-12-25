@@ -100,7 +100,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
     return TRUE;
 }
 
-Missile missile(0, 0);
+Missile missile(25, 25);
 
 //Обрабатывает сообщения в главном окне
 //
@@ -119,7 +119,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
         case IDM_ABOUT:
             //DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-            MessageBox(NULL, L"Версия 0.0.1\n3-325 Новиков К.А.\nМАИ 2023", L"О программе", MB_OK | MB_ICONINFORMATION);
+            MessageBox(NULL, L"Версия 0.0.2\n3-325 Новиков К.А.\nМАИ 2023", L"О программе", MB_OK | MB_ICONINFORMATION);
             break;
         case IDM_EXIT:
             DestroyWindow(hWnd);

@@ -1,25 +1,25 @@
 #include "Figures.h"
 
 
-Location::Location(int x, int y) {
+Location::Location(double x, double y) {
 	this->x = x;
 	this->y = y;
 }
 
 
-Point::Point(int x, int y) : Location(x, y) {};
+Point::Point(double x, double y) : Location(x, y) {};
 
 void Point::show(HDC hdc) {
 	SetPixel(hdc, x, y, RGB(0, 0, 0));
 }
 
 
-MovingObject::MovingObject(int x, int y) : Point(x, y) {};
+MovingObject::MovingObject(double x, double y) : Point(x, y) {};
 
 
-Missile::Missile(int x, int y) : MovingObject(x, y) {};
+Missile::Missile(double x, double y) : MovingObject(x, y) {};
 
-void Missile::move(int offsetX, int offsetY) {
+void Missile::move(double offsetX, double offsetY) {
 	this->x += offsetX;
 	this->y += offsetY;
 }
@@ -43,23 +43,18 @@ void Missile::onKeyDown(WPARAM wParam) {
 }
 
 void Missile::show(HDC hdc) {
-	HPEN pen = CreatePen(PS_SOLID, weightContour, RGB(0, 0, 0));
+	HPEN pen = CreatePen(PS_SOLID, rContour * 2 + 1, RGB(127, 127, 127)); //Контур
 	SelectObject(hdc, pen);
+	HBRUSH brush = CreateSolidBrush(RGB(191, 191, 191)); //Заливка
+	SelectObject(hdc, brush);
+	Ellipse(hdc, x - rFigure + rContour + 0.5, y - rFigure + rContour + 0.5,
+		x + rFigure - rContour + 0.5, y + rFigure - rContour + 0.5);
+	SelectObject(hdc, GetStockObject(NULL_BRUSH));
 
-
-	Ellipse(hdc, 0 + x, 0 + y, size + x, size + y);
-
-
-	HBRUSH blueBrush = CreateSolidBrush(RGB(0, 0, 255));
-	SelectObject(hdc, blueBrush);
-
-	HPEN redPen = CreatePen(PS_SOLID, 2, RGB(255, 0, 0));
-	SelectObject(hdc, redPen);
-
-	Ellipse(hdc, 100, 100, 300, 300);
-
+	pen = CreatePen(PS_SOLID, 1, RGB(0, 0, 0)); //Контур
+	SelectObject(hdc, pen);
+	Ellipse(hdc, x - rFigure + 0.5, y - rFigure + 0.5, x + rFigure + 0.5, y + rFigure + 0.5);
 
 	SelectObject(hdc, GetStockObject(BLACK_PEN));
-	SelectObject(hdc, GetStockObject(NULL_BRUSH));
 	DeleteObject(pen);
 }

@@ -15,31 +15,41 @@ class Missile; //Снаряд
 
 class Location {
 protected:
-	int x;
-	int y;
+	double x;
+	double y;
 public:
-	Location(int x, int y);
+	Location(double x, double y);
 };
 
 class Point : public Location {
 public:
-	Point(int x, int y);
+	Point(double x, double y);
 	virtual void show(HDC hdc);
 };
 
 class MovingObject : public Point {
 public:
-	MovingObject(int x, int y);
-	virtual void move(int offsetX, int offsetY) = 0;
+	MovingObject(double x, double y);
+	virtual void move(double offsetX, double offsetY) = 0;
 };
 
 class Missile : public MovingObject {
 protected:
-	int weightContour = 1;
-	int size = 101;
+	int rContour = 3;
+	int rFigure = 25;
+
+	bool statical = true; //Может ли объект двигаться
+
+	//Скрости
+	double mSpeed = 0; //По модулю
+	double xShift = 0;
+	double yShift = 0;
+
+	double xSpeed = 0; //Скорость по X
+	double ySpeed = 0; //Скорость по Y
 public:
-	Missile(int x, int y);
-	virtual void move(int offsetX, int offsetY) override;
+	Missile(double x, double y);
+	virtual void move(double offsetX, double offsetY) override;
 	void onKeyDown(WPARAM wParam);
 	void show(HDC hdc);
 };
