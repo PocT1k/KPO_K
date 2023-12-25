@@ -135,7 +135,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         HDC hdc = BeginPaint(hWnd, &ps);
 
         missile.show(hdc);
-        // TODO: Добавьте сюда любой код прорисовки, использующий HDC
 
         EndPaint(hWnd, &ps);
     }
