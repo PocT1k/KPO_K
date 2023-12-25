@@ -6,11 +6,10 @@
 
 class Location;
 class Point;
-class Face;
+class Missile; //Снаряд
 
 
-class Location
-{
+class Location {
 protected:
 	int x;
 	int y;
@@ -18,20 +17,19 @@ public:
 	Location(int x, int y);
 };
 
-class Point : public Location
-{
+class Point : public Location {
 public:
 	Point(int x, int y);
 	virtual void show(HDC hdc);
-	virtual void move(int offsetX, int offsetY);
 };
 
-class Face : public Point
-{
+class Missile : public Point {
 protected:
-	int weightLine = 4;
+	int weightLine = 1;
+	int size = 101;
 public:
-	Face(int x, int y);
+	Missile(int x, int y);
+	virtual void move(int offsetX, int offsetY);
 	void onKeyDown(WPARAM wParam);
 	void show(HDC hdc);
 };
