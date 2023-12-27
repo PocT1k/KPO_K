@@ -87,7 +87,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
     hInst = hInstance; // Сохранить маркер экземпляра в глобальной переменной
 
-    HWND hWnd = CreateWindowW(szWindowClass, L"Корамболь" /*szTitle*/, WS_OVERLAPPEDWINDOW,
+    HWND hWnd = CreateWindowW(szWindowClass, L"Корамболь" /*szTitle*/, WS_OVERLAPPEDWINDOW & ~WS_THICKFRAME & ~WS_MAXIMIZEBOX,
         0, 0, 1000, 500, nullptr, nullptr, hInstance, nullptr);
 
     if (!hWnd)
@@ -136,6 +136,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         HDC hdc = BeginPaint(hWnd, &ps);
 
         missile.show(hdc);
+        wall.show(hdc);
 
         EndPaint(hWnd, &ps);
     }

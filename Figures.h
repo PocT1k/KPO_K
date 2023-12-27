@@ -8,7 +8,8 @@
 class Location;
 class Point;
 
-class MovingObject;
+class Wall;
+
 class Missile; //Снаряд
 
 
@@ -26,13 +27,16 @@ public:
 	virtual void show(HDC hdc);
 };
 
-class MovingObject : public Point {
+class Wall {
+	int weightLine = 5;
+	int border; //Где граница
+	char type; //В какую сторону
 public:
-	MovingObject(double x, double y);
-	virtual void move(double offsetX, double offsetY) = 0;
+	Wall(int border, char type);
+	void show(HDC hdc);
 };
 
-class Missile : public MovingObject {
+class Missile : public Point {
 protected:
 	int rContour = 3;
 	int rFigure = 25;
@@ -48,8 +52,8 @@ protected:
 	double ySpeed = 0; //Скорость по Y
 public:
 	Missile(double x, double y);
-	virtual void move(double offsetX, double offsetY) override;
-	void onKeyDown(WPARAM wParam);
+	virtual void move(double offsetX, double offsetY);
+	//void onKeyDown(WPARAM wParam);
 	void show(HDC hdc);
 };
 
