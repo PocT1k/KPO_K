@@ -7,12 +7,16 @@
 #include "Figures.h"
 
 
-extern Missile missile(25, 25);
-extern Wall wall(255, 'r');
+extern Missile missile;
+extern Wall wall;
 
-VOID CALLBACK TimerProc(HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime) {
-	//missile.move(1, 0.1);
-	InvalidateRect(hwnd, NULL, TRUE);
+
+VOID CALLBACK TimerProc1(HWND hWnd, UINT message, UINT_PTR idEvent, DWORD dwTime) {
+	missile.move();
+}
+
+VOID CALLBACK TimerProc2(HWND hWnd, UINT message, UINT_PTR idEvent, DWORD dwTime) {
+	InvalidateRect(hWnd, NULL, TRUE);
 }
 
 #endif

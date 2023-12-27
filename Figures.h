@@ -3,27 +3,28 @@
 #pragma once
 
 #include <windows.h>
+#include <cmath>
 
 
 class Location;
 class Point;
-
 class Wall;
-
 class Missile; //Снаряд
+
+//class Sizes;
 
 
 class Location {
 protected:
-	double x;
-	double y;
+	float x;
+	float y;
 public:
-	Location(double x, double y);
+	Location(float x, float y);
 };
 
 class Point : public Location {
 public:
-	Point(double x, double y);
+	Point(float x, float y);
 	virtual void show(HDC hdc);
 };
 
@@ -44,17 +45,26 @@ protected:
 	bool statical = true; //Может ли объект двигаться
 
 	//Скрости
-	double mSpeed = 0; //По модулю
-	double xShift = 0;
-	double yShift = 0;
+	float mSpeed = 0; //По модулю
+	//float xSpeed = 0;
+	//float ySpeed = 0;
 
-	double xSpeed = 0; //Скорость по X
-	double ySpeed = 0; //Скорость по Y
+	float mShift = 0;
+	float mShiftNew = 0;
+	float ratioShift = 0;
+	float xShift = 0; //Скорость по X
+	float yShift = 0; //Скорость по Y
 public:
-	Missile(double x, double y);
-	virtual void move(double offsetX, double offsetY);
+	Missile(float x, float y);
+	void setShift(float xShift, float yShift);
+	virtual void move();
 	//void onKeyDown(WPARAM wParam);
 	void show(HDC hdc);
+};
+
+class Sizes {
+public:
+	RECT window = { 0, 0, 1000, 500 };
 };
 
 

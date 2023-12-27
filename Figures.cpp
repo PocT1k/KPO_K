@@ -1,13 +1,16 @@
 #include "Figures.h"
 
 
-Location::Location(double x, double y) {
+extern Sizes sizes;
+
+
+Location::Location(float x, float y) {
 	this->x = x;
 	this->y = y;
 }
 
 
-Point::Point(double x, double y) : Location(x, y) {};
+Point::Point(float x, float y) : Location(x, y) {};
 
 void Point::show(HDC hdc) {
 	SetPixel(hdc, x, y, RGB(0, 0, 0));
@@ -37,7 +40,7 @@ void Wall::show(HDC hdc) {
 	switch (this->type){
 	case 'r':
 		MoveToEx(hdc, this->border + weightLine, 0, NULL);
-		LineTo(hdc,this->border + weightLine, 0);
+		LineTo(hdc,this->border + weightLine, sizes.window.bottom);
 		break;
 	case 'l':
 		break;
@@ -54,11 +57,39 @@ void Wall::show(HDC hdc) {
 }
 
 
-Missile::Missile(double x, double y) : Point(x, y) {};
+Missile::Missile(float x, float y) : Point(x, y) {};
 
-void Missile::move(double offsetX, double offsetY) {
-	this->x += offsetX;
-	this->y += offsetY;
+void Missile::setShift(float xShift, float yShift) {
+	this->xShift += xShift;
+	this->yShift += yShift;
+}
+
+void Missile::move() {
+	if (xShift == 0 || yShift == 0) {
+		xShift = 0;
+		yShift = 0;
+
+		return;
+	}
+	//Изменение координат
+	x += xShift;
+	y += yShift;
+
+	//Перерасчёт скорости
+	mShift = pow(xShift * xShift + yShift * yShift, 0.5); //Получение модуля скорости
+	mShiftNew = mShift - 5 / mShift; //Применение формулы изменения скорости
+
+	if (mShiftNew < 0.01) {
+		xShift = 0;
+		yShift = 0;
+
+		return;
+	}
+
+	ratioShift = mShiftNew / mShift; //Высчитывание коэфециэнта уменьшения скорости
+	//Пересчёт
+	xShift = xShift * ratioShift;
+	yShift = yShift * ratioShift;
 }
 
 //void Missile::onKeyDown(WPARAM wParam) {
@@ -80,7 +111,7 @@ void Missile::move(double offsetX, double offsetY) {
 //}
 
 void Missile::show(HDC hdc) {
-	HPEN pen = CreatePen(PS_SOLID, rContour * 2 + 1, RGB(127, 127, 127)); //Контур
+	HPEN pen = CreatePen(PS_SOLID, rContour * 2 + 1, RGB(127, 127, 127)); //Предконтур
 	SelectObject(hdc, pen);
 	HBRUSH brush = CreateSolidBrush(RGB(191, 191, 191)); //Заливка
 	SelectObject(hdc, brush);

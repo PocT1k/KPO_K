@@ -8,6 +8,11 @@
 #define MAX_LOADSTRING 100
 
 
+Sizes sizes;
+Missile missile(25, 25);
+Wall wall(255, 'r');
+
+
 // Глобальные переменные:
 HINSTANCE hInst;                                // текущий экземпляр
 WCHAR szTitle[MAX_LOADSTRING];                  // Текст строки заголовка
@@ -29,6 +34,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
+    missile.setShift(50, 3);
     // TODO: Разместите код здесь - инициализация и подгрузка
 
     // Инициализация глобальных строк
@@ -60,8 +66,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 }
 
 //Регистрирует класс окна
-ATOM MyRegisterClass(HINSTANCE hInstance)
-{
+ATOM MyRegisterClass(HINSTANCE hInstance) {
     WNDCLASSEXW wcex;
 
     wcex.cbSize = sizeof(WNDCLASSEX); //СвМо - Задача размера структуры
@@ -83,12 +88,12 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 
 //Сохраняет маркер экземпляра и создает главное окно
 //В этой функции маркер экземпляра сохраняется в глобальной переменной, а также создается и выводится главное окно программы.
-BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
-{
+BOOL InitInstance(HINSTANCE hInstance, int nCmdShow) {
     hInst = hInstance; // Сохранить маркер экземпляра в глобальной переменной
 
     HWND hWnd = CreateWindowW(szWindowClass, L"Корамболь" /*szTitle*/, WS_OVERLAPPEDWINDOW & ~WS_THICKFRAME & ~WS_MAXIMIZEBOX,
-        0, 0, 1000, 500, nullptr, nullptr, hInstance, nullptr);
+        sizes.window.left, sizes.window.top, sizes.window.right, sizes.window.bottom,
+        nullptr, nullptr, hInstance, nullptr);
 
     if (!hWnd)
     {
@@ -106,9 +111,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //WM_COMMAND  - обработать меню приложения
 //WM_PAINT    - Отрисовка главного окна
 //WM_DESTROY  - отправить сообщение о выходе и вернуться
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-    SetTimer(hWnd, 1, 1000 / 60, (TIMERPROC)TimerProc); //Таймер 1/60 секунды
+LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
+    SetTimer(hWnd, 1, 1000 / 60, (TIMERPROC)TimerProc1); //Таймер 1/60 секунды
+    SetTimer(hWnd, 2, 1000 / 30, (TIMERPROC)TimerProc2); //Таймер 1/30 секунды
 
     switch (message)
     {
