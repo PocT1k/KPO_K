@@ -3,6 +3,7 @@
 #include "framework.h"
 #include "KPO_K.h"
 #include "Figures.h"
+#include "Processing.h"
 
 #define MAX_LOADSTRING 100
 
@@ -87,7 +88,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
     hInst = hInstance; // Сохранить маркер экземпляра в глобальной переменной
 
     HWND hWnd = CreateWindowW(szWindowClass, L"Корамболь" /*szTitle*/, WS_OVERLAPPEDWINDOW,
-        CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+        0, 0, 1000, 500, nullptr, nullptr, hInstance, nullptr);
 
     if (!hWnd)
     {
@@ -100,8 +101,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
     return TRUE;
 }
 
-Missile missile(25, 25);
-
 //Обрабатывает сообщения в главном окне
 //
 //WM_COMMAND  - обработать меню приложения
@@ -109,6 +108,8 @@ Missile missile(25, 25);
 //WM_DESTROY  - отправить сообщение о выходе и вернуться
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    SetTimer(hWnd, 1, 1000 / 60, (TIMERPROC)TimerProc); //Таймер 1/60 секунды
+
     switch (message)
     {
     case WM_COMMAND: //Кнопки меню

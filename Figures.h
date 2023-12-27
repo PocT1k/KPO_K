@@ -1,9 +1,8 @@
 #ifndef KPO_K_FIGURES
 #define KPO_K_FIGURES
+#pragma once
 
 #include <windows.h>
-
-//#pragma once
 
 
 class Location;
